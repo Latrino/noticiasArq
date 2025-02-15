@@ -1,3 +1,6 @@
+#ifndef NOTICIA_HPP
+#define NOTICIA_HPP
+
 #include <iostream>
 #include <string>
 
@@ -16,3 +19,5 @@ class Noticia {
         string getTema() const { return tema; }
         string getNoticia() const { return contenido; }
 };
+
+#endif // NOTICIA_HPP

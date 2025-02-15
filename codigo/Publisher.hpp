@@ -1,9 +1,12 @@
+#ifndef PUBLISHER_HPP
+#define PUBLISHER_HPP
+
 #include <iostream>
 #include <vector>
 #include <string>
 #include <map>
 #include <set>
-#include <Noticia.hpp>
+#include "Noticia.hpp"
 
 using namespace std;
 
@@ -18,3 +21,5 @@ class Publisher {
         vector<Noticia> mostrarNoticiasPorTema(const set <string>& tema);
 
 };
+
+#endif // PUBLISHER_HPP
