@@ -19,13 +19,21 @@ int main() {
     suscriptor1.suscribirse(listaTemas[1]);
 
     Observer suscriptor2("Jesus", &escritor);
-    suscriptor1.suscribirse(listaTemas[0]);
-    suscriptor1.suscribirse(listaTemas[2]);
+    suscriptor2.suscribirse(listaTemas[0]);
+    suscriptor2.suscribirse(listaTemas[2]);
 
     Observer suscriptor3("Izan", &escritor);
-    suscriptor1.suscribirse(listaTemas[2]);
-    suscriptor1.suscribirse(listaTemas[3]);
+    suscriptor3.suscribirse(listaTemas[2]);
+    suscriptor3.suscribirse(listaTemas[3]);
 
     suscriptor1.refresh();
+    suscriptor2.refresh();
+    suscriptor3.refresh();
 
+    suscriptor3.suscribirse(listaTemas[1]);
+
+    escritor.publicarNoticia(listaTemas[1], "Otro robo mas");
+
+    suscriptor1.refresh();
+    suscriptor3.refresh();
 }
