@@ -27,4 +27,4 @@ Publisher.o: Publisher.cpp Publisher.hpp
 #-----------------------------------------------------------	
 # LIMPIEZA de todo lo generado. Ojo: se borrarán sin preguntar
 clean:
-	${RM} *.o noticia
+	${RM} *.o noticia file.txt
