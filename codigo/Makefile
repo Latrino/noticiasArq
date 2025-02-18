@@ -12,7 +12,7 @@ CPPFLAGS = -I. -std=c++11      #opciones de compilación
 LDFLAGS =                      #opciones de linkado
 RM = rm -f                     #comando para borrar ficheros
 
-all: pruebas01
+all: noticia
 #-----------------------------------------------------------
 # Compilacion
 main.o: main.cpp

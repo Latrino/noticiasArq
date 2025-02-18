@@ -34,7 +34,13 @@ vector<Noticia> Publisher::mostrarNoticiasPorTema(const set <string>& temas) {
                 size_t pos = linea.find("|");
                 if (pos != string::npos) {
                     temaActual = linea.substr(0, pos);
-                    contenidoAcumulado = linea.substr(pos + 1);
+                    cout << temaActual << endl;
+                    for (auto t : temas){
+                        cout << "Bucle:" << t << endl;
+                        if (t == temaActual){
+                            contenidoAcumulado = linea.substr(pos + 1);
+                        }
+                    }
                 } else {
                     contenidoAcumulado += "\n" + linea;
                 }
