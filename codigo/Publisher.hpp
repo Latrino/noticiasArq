@@ -13,7 +13,7 @@ using namespace std;
 class Publisher {
     private:
         string nombreFichero;
-        vector<Noticia> listaNoticias;
+        vector<Noticia> listaNoticias; // ahora mismo no se usa, puede ser util para funcionalidades futuras
     
     public:
         Publisher(const string& _nombreFichero) : nombreFichero(_nombreFichero) {};
