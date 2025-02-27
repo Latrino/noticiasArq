@@ -1,3 +1,11 @@
+/* 
+* Autores: Alicia Lázaro Huerta y Pablo Latre Villacampa
+* Fecha: 27/02/2025
+* Ejecución: "make" para compilar, "./noticia" para ejecutar
+*/
+
+
+
 #include "Observer.hpp"
 #include "Publisher.hpp"
 #include <iostream>

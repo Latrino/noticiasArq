@@ -22,6 +22,9 @@ class Observer {
 
     void refresh() {
         cout << "Noticias para " << nombre << endl;
+        for (auto tema : temasSeguidos) {
+            cout << " - " << tema << endl;
+        }
         vector<Noticia> noticias = publisher->mostrarNoticiasPorTema(temasSeguidos);
         for (const Noticia& n : noticias) {
             cout << "-------------------------------------" << endl;
