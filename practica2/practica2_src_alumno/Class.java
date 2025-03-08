@@ -8,6 +8,7 @@ public class Class {
 	private String name;
 	private int x, y, width, height;
 	private boolean selected;
+	private boolean moving;
 	private static int count = 0; // count es de la clase en general, no de la clase especifica (static)
 	
 	public Class(int _x, int _y) {
@@ -17,6 +18,7 @@ public class Class {
 		this.width = 120;
 		this.height = 80;
 		this.selected = false;
+		this.moving = false;
 	}
 	
 	public void draw(Graphics g){
