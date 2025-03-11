@@ -21,6 +21,22 @@ public class Class {
 		this.selected = false;
 		this.moving = false;
 	}
+
+	public int getX() {
+		return this.x;
+	}
+
+	public int getY() {
+		return this.y;
+	}
+
+	public int getWidth() {
+		return this.width;
+	}
+
+	public int getHeight() {
+		return this.height;
+	}
 	
 	public void draw(Graphics g){
 		//Dibuja la clase

@@ -38,7 +38,7 @@ public class Diagram
 		//Añade una clase al diagrama
 		classes.add(new Class(50 + (classes.size() * 10), 50));
         window.updateNClasses(this);
-        repaint();
+        paint();
 	}
 	
 	public int getNClasses(){
@@ -70,29 +70,38 @@ public class Diagram
 			int mx = e.getX();
 			int my = e.getY();
 
-
-
-
 			// Si es clic derecho, eliminar la clase
 		if (SwingUtilities.isRightMouseButton(e)) { // ESTE ESTA BIEN
 			classes.removeIf(c -> c.contains(mx, my));
-			for (Association a : associations) {
+			for (Association a : c.associations) {
 				if (a.contains(mx, my)) { // esto hay que mirarlo (no he diseñado la clase aun)
+					a.delete();
 					associations.remove(a);
 					break;
 				}
 			}
-			repaint();
+			paint();
 			return;
 		}
 
 		// lo que de verdad tiene sentido:
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			// Verificar si el clic fue sobre una clase existente
-			for (int i = classes.size() - 1; i >= 0; i--) {  // Iterar en orden inverso (de arriba hacia abajo)
-				Class c = classes.get(i);
-				if (c.contains(mx, my)) {
-					c.moving = true;
+			if (selectedClass = null) {
+				for (int i = classes.size() - 1; i >= 0; i--) {  // Iterar en orden inverso (de arriba hacia abajo)
+					Class c = classes.get(i); 
+					if (c.contains(mx, my)) {
+						c.moving = true;
+					}
+				}
+			}
+			else {
+				// esperamos y guardamos el origen
+				for (int i = classes.size() - 1; i >= 0; i--) {
+					Class c = classes.get(i); 
+					if (c.contains(mx, my)) {
+						// nos guardamos el origen, como? idk
+					}
 				}
 			}
 
@@ -119,7 +128,7 @@ public class Diagram
 				classes.remove(i);
 				classes.add(c);
 				
-				repaint();
+				paint();
 				return;
 			}
 		}
@@ -147,7 +156,7 @@ public class Diagram
 		for (Class c : classes) {
 			if (c.moving) {
 				c.move(mx - c.x, my - c.y);
-				repaint();
+				paint();
 			}
 		}
 	}
@@ -174,14 +183,14 @@ public class Diagram
 						selectedClass = c;
 						c.toggleSelection();
 					}					
-					repaint();
+					paint();
 					return;
 				}
 			}
 			if (selectedClass != null) {
 				selectedClass.toggleSelection();
 				selectedClass = null;
-				repaint();
+				paint();
 			}
 		}
 	}
