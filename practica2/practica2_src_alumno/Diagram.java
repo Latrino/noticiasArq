@@ -85,28 +85,6 @@ public class Diagram
 			repaint();
 			return;
 		}
-// ----------------  DE DONDE COÑO SALE QUE ESTO FUNCIONE ASI  -----------------------------------------------------
-// no tiene ningun sentido
-		// Verificar si el clic fue sobre una clase existente
-		for (int i = classes.size() - 1; i >= 0; i--) {  // Iterar en orden inverso (de arriba hacia abajo)
-			Class c = classes.get(i);
-			if (c.contains(mx, my)) {
-				c.toggleSelection();
-
-				// Traer la clase al frente
-				classes.remove(i);
-				classes.add(c);
-				
-				repaint();
-				return;
-			}
-		}
-
-    	// Si no se hizo clic en ninguna clase, agregar una nueva
-    	Class newClass = new UMLClass(mx, my);
-    	classes.add(newClass);
-    	repaint();
-		// fin de lo que no tiene sentido
 
 		// lo que de verdad tiene sentido:
 		if (SwingUtilities.isLeftMouseButton(e)) {
@@ -119,6 +97,7 @@ public class Diagram
 			}
 
    		}
+	}
     
     public void mouseReleased(MouseEvent e) {
 		for (Class c : classes) {
@@ -127,6 +106,7 @@ public class Diagram
 		// revisar, lo que hace es que si se suelta el boton del raton, se deja de mover la clase
     }
     
+	// revisar
 	public void mouseEntered(MouseEvent e) {
 		int mx = e.getX();
 		int my = e.getY(); 
@@ -134,7 +114,6 @@ public class Diagram
 		for (int i = classes.size() - 1; i >= 0; i--) {  // Iterar en orden inverso (de arriba hacia abajo)
 			Class c = classes.get(i);
 			if (c.contains(mx, my)) {
-				c.toggleSelection();
 
 				// Traer la clase al frente
 				classes.remove(i);
@@ -189,6 +168,7 @@ public class Diagram
 				if (c.contains(mx, my)) {
 					if (c.isSelected()){
 						c.toggleSelection();
+						selectedClass = null;
 					}
 					else{
 						selectedClass = c;
