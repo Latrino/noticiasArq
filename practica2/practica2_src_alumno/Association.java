@@ -7,9 +7,14 @@ public class Association {
 
 	// Atributos
 	// ...
+	private int identifier;
+	private static int count = 0;
 	
 	// Constructores
 	// ...
+	public Association() {
+		this.identifier = count++;
+	}
 	
 	public void draw(Graphics graphics) {
 		// Dibuja la asociación

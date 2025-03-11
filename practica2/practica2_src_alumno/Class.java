@@ -10,6 +10,7 @@ public class Class {
 	private boolean selected;
 	private boolean moving;
 	private static int count = 0; // count es de la clase en general, no de la clase especifica (static)
+	private Vector<Association> associations = new Vector<Association>(); // hay que guardar todas las asociaciones para borrarlas si se borra la clase
 	
 	public Class(int _x, int _y) {
 		this.name = "Class " + (count++);
@@ -66,6 +67,10 @@ public class Class {
     public boolean isSelected() {
         return selected;
     }
+
+	public void addAssociation(Association a) {
+		associations.add(a);
+	}
 	
 	//Otros metodos	
 	// …

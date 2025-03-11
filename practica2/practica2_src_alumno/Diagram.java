@@ -106,6 +106,7 @@ public class Diagram
     	Class newClass = new UMLClass(mx, my);
     	classes.add(newClass);
     	repaint();
+		// fin de lo que no tiene sentido
 
 		// lo que de verdad tiene sentido:
 		if (SwingUtilities.isLeftMouseButton(e)) {
