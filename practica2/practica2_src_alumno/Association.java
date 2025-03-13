@@ -14,6 +14,14 @@ public class Association {
 	
 	// Constructores
 	// ...
+	// podemos añadir varios constructores, igual es buena idea
+	public Association(Class _origen) {
+		this.origen = _origen;
+		this.destino = null;
+		this.identifier = count++;
+	}
+
+	// no se si llegaremos a necesitar este constructor
 	public Association(Class _origen, Class _destino) {
 		this.identifier = count++;
 		this.origen = _origen;
@@ -22,6 +30,10 @@ public class Association {
 
 	public setOrigen(Class _origen) {
 		this.origen = _origen;
+	}
+
+	public setDestino(Class _destino) {
+		this.destino = _destino;
 	}
 	
 	public void draw(Graphics graphics) {

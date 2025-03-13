@@ -100,7 +100,10 @@ public class Diagram
 				for (int i = classes.size() - 1; i >= 0; i--) {
 					Class c = classes.get(i); 
 					if (c.contains(mx, my)) {
-						// nos guardamos el origen, como? idk
+						// creamos la asociacion solo con el origen
+						Association a = new Association(c);
+						associations.add(a);
+						eligiendoAsociacion = true;
 					}
 				}
 			}
@@ -109,8 +112,33 @@ public class Diagram
 	}
     
     public void mouseReleased(MouseEvent e) {
-		for (Class c : classes) {
-			c.moving = false;
+		/*
+		* si se estaba eligiendo una asociacion cuando se suelta el raton se mira a ver si se ha soltado sobre una clase
+		* si es asi, se añade la clase como destino de la asociacion
+		* si no, se cancela la creacion de la asociacion y se deselecciona la clase
+		*/
+		if (eligiendoAsociacion) {
+			int mx = e.getX();
+			int my = e.getY();
+			for (int i = classes.size() - 1; i >= 0; i--) {
+				Class c = classes.get(i);
+				if (c.contains(mx, my)) {
+					// añadir el destino a la asociacion
+					Association a = associations.get(associations.size() - 1);
+					a.setDestino(c);
+					eligiendoAsociacion = false;
+					paint();
+					return;
+				}
+			}
+			eligiendoAsociacion = false;
+			selectedClass = null;
+			paint();
+		}
+		else {
+			for (Class c : classes) {
+				c.moving = false;
+			}
 		}
 		// revisar, lo que hace es que si se suelta el boton del raton, se deja de mover la clase
     }
