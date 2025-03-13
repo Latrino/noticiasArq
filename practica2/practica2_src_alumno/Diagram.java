@@ -132,6 +132,8 @@ public class Diagram
 				}
 			}
 			eligiendoAsociacion = false;
+			Association a = associations.get(associations.size() - 1);
+			associations.remove(a);
 			selectedClass = null;
 			paint();
 		}
