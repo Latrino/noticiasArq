@@ -72,10 +72,17 @@ public class Diagram
 
 			// Si es clic derecho, eliminar la clase
 		if (SwingUtilities.isRightMouseButton(e)) { // ESTE ESTA BIEN
+			Class c = null;
+			classes.forEach(cl -> {
+				if (cl.contains(mx, my)) {
+					c = cl;
+				}
+			});
 			classes.removeIf(c -> c.contains(mx, my));
 			for (Association a : c.associations) {
-				if (a.contains(mx, my)) { // esto hay que mirarlo (no he diseñado la clase aun)
-					a.delete();
+				if (a.perteneceAClase(c)) { 
+					// a.delete(); se puede poner para depurar pero como java quita la basura no deberia hacer falta
+					// solo con quitar la asociacion de la lista de asociaciones de la clase deberia bastar
 					associations.remove(a);
 					break;
 				}

@@ -28,12 +28,16 @@ public class Association {
 		this.destino = _destino;
 	}
 
-	public setOrigen(Class _origen) {
+	public Class setOrigen(Class _origen) {
 		this.origen = _origen;
 	}
 
-	public setDestino(Class _destino) {
+	public Class setDestino(Class _destino) {
 		this.destino = _destino;
+	}
+
+	public Boolean perteneceAClase(Class _clase) {
+		return (this.origen == _clase || this.destino == _clase);
 	}
 	
 	public void draw(Graphics graphics) {
