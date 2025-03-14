@@ -1,5 +1,7 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.*;
+import java.awt.Color;
 //otros import
 
 public class Class {
@@ -32,6 +34,18 @@ public class Class {
 
 	public int getWidth() {
 		return this.width;
+	}
+
+	public void setMoving(boolean _moving) {
+		this.moving = _moving;
+	}
+
+	public boolean isMoving() {
+		return this.moving;
+	}
+
+	public Vector<Association> getAssociations() {
+		return this.associations;
 	}
 
 	public int getHeight() {
@@ -76,13 +90,17 @@ public class Class {
     }
 
 
-	public void toggleSelection() {
+	/*public void toggleSelection() {
         selected = !selected;
-    }
+    }*/
 
     public boolean isSelected() {
         return selected;
     }
+
+	public void setSelected(boolean _selected) {
+		this.selected = _selected;
+	}
 
 	public void addAssociation(Association a) {
 		associations.add(a);

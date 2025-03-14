@@ -13,12 +13,14 @@ public class Diagram
 	private Window window;//Ventana en la que está el diagrama
 	public Class clase; 
 	
-	private Vector classes = new Vector(); //las clases que crea el usuario
-	private Vector associations = new Vector(); // las asociaciones que crea el usuario
+	private Vector<Class> classes = new Vector(); //las clases que crea el usuario
+	private Vector<Association> associations = new Vector(); // las asociaciones que crea el usuario
 
 	private Class selectedClass = null; //la clase seleccionada
 
 	private boolean eligiendoAsociacion = false; //indica si el usuario está eligiendo una asociación
+
+	private Class mouseOverClass = null; //la clase sobre la que está el cursor
 	
 	// ... (otros posibles atributos)
 
@@ -38,7 +40,7 @@ public class Diagram
 		//Añade una clase al diagrama
 		classes.add(new Class(50 + (classes.size() * 10), 50));
         window.updateNClasses(this);
-        paint();
+        repaint();
 	}
 	
 	public int getNClasses(){
@@ -51,9 +53,21 @@ public class Diagram
 		return associations.size();
 	}
 
-	public void paint(Graphics g) {
+	/*public void paint(Graphics g) {
 		//Dibuja el diagrama de clases
 		super.paint(g);
+		for (Class c : classes) {
+			c.draw(g);
+		}
+		for (Association a : associations) {
+			a.draw(g);
+		}
+	}*/
+
+	@Override
+	public void paintComponent(Graphics g) {
+		//Dibuja el diagrama de clases
+		super.paintComponent(g);
 		for (Class c : classes) {
 			c.draw(g);
 		}
@@ -73,13 +87,13 @@ public class Diagram
 			// Si es clic derecho, eliminar la clase
 		if (SwingUtilities.isRightMouseButton(e)) { // ESTE ESTA BIEN
 			Class c = null;
-			classes.forEach(cl -> {
+			for (Class cl : classes) {
 				if (cl.contains(mx, my)) {
 					c = cl;
+					break;
 				}
-			});
-			classes.removeIf(c -> c.contains(mx, my));
-			for (Association a : c.associations) {
+			}
+			for (Association a : c.getAssociations()) {
 				if (a.perteneceAClase(c)) { 
 					// a.delete(); se puede poner para depurar pero como java quita la basura no deberia hacer falta
 					// solo con quitar la asociacion de la lista de asociaciones de la clase deberia bastar
@@ -87,31 +101,29 @@ public class Diagram
 					break;
 				}
 			}
-			paint();
+			classes.removeIf(z -> z.contains(mx, my));
+			repaint();
 			return;
 		}
 
 		// lo que de verdad tiene sentido:
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			// Verificar si el clic fue sobre una clase existente
-			if (selectedClass = null) {
+			if (selectedClass == null) {
 				for (int i = classes.size() - 1; i >= 0; i--) {  // Iterar en orden inverso (de arriba hacia abajo)
 					Class c = classes.get(i); 
 					if (c.contains(mx, my)) {
-						c.moving = true;
+						c.setMoving(true);
 					}
 				}
 			}
 			else {
-				// esperamos y guardamos el origen
-				for (int i = classes.size() - 1; i >= 0; i--) {
-					Class c = classes.get(i); 
-					if (c.contains(mx, my)) {
-						// creamos la asociacion solo con el origen
-						Association a = new Association(c);
-						associations.add(a);
-						eligiendoAsociacion = true;
-					}
+				// esperamos y guardamos el origen 
+				if (selectedClass.contains(mx, my)) {
+					// creamos la asociacion solo con el origen
+					Association a = new Association(selectedClass);
+					associations.add(a);
+					eligiendoAsociacion = true;
 				}
 			}
 
@@ -134,7 +146,7 @@ public class Diagram
 					Association a = associations.get(associations.size() - 1);
 					a.setDestino(c);
 					eligiendoAsociacion = false;
-					paint();
+					repaint();
 					return;
 				}
 			}
@@ -142,11 +154,11 @@ public class Diagram
 			Association a = associations.get(associations.size() - 1);
 			associations.remove(a);
 			selectedClass = null;
-			paint();
+			repaint();
 		}
 		else {
 			for (Class c : classes) {
-				c.moving = false;
+				c.setMoving(false);
 			}
 		}
 		// revisar, lo que hace es que si se suelta el boton del raton, se deja de mover la clase
@@ -154,7 +166,7 @@ public class Diagram
     
 	// revisar
 	public void mouseEntered(MouseEvent e) {
-		int mx = e.getX();
+		/*int mx = e.getX();
 		int my = e.getY(); 
 
 		for (int i = classes.size() - 1; i >= 0; i--) {  // Iterar en orden inverso (de arriba hacia abajo)
@@ -164,15 +176,18 @@ public class Diagram
 				// Traer la clase al frente
 				classes.remove(i);
 				classes.add(c);
+
+				mouseOverClass = c;
 				
-				paint();
+				repaint();
 				return;
 			}
-		}
+		}*/
     }
     
 	public void mouseExited(MouseEvent e) {
-		// aqui hace falta algo?
+		mouseOverClass = null;
+		repaint();
     }
     
 	public void mouseClicked(MouseEvent e) {
@@ -183,7 +198,24 @@ public class Diagram
 	/** MÈtodos de MouseMotionListener         **/
 	/********************************************/    
     public void mouseMoved(MouseEvent e) {
-		//…
+		int mx = e.getX();
+		int my = e.getY();
+		boolean found = false;
+
+		for (int i = classes.size() - 1; i >= 0; i--) {  
+			Class c = classes.get(i);
+			if (c.contains(mx, my)) {
+				mouseOverClass = c;
+				found = true;
+				repaint();
+				break;
+			}
+		}
+
+		if (!found) {
+			mouseOverClass = null;
+			repaint();
+		}
 	}
     
 	public void mouseDragged(MouseEvent e) {
@@ -191,9 +223,9 @@ public class Diagram
 		int mx = e.getX();
 		int my = e.getY();
 		for (Class c : classes) {
-			if (c.moving) {
-				c.move(mx - c.x, my - c.y);
-				paint();
+			if (c.isMoving()) {
+				c.move(mx - c.getX(), my - c.getY());
+				repaint();
 			}
 		}
 	}
@@ -209,25 +241,31 @@ public class Diagram
 	public void keyPressed(KeyEvent e) {
 		// si se pulsa la tecla S se selecciona la clase sobre la que esta el cursor
 		// si se pulsa S cuando ya hay una clase seleccionada, se deselecciona
+		//int mx = e.getX();
+		//int my = e.getY();
 		if (e.getKeyCode() == KeyEvent.VK_S) {
 			for (Class c : classes) {
-				if (c.contains(mx, my)) {
-					if (c.isSelected()){
-						c.toggleSelection();
+				if (mouseOverClass != null && c == mouseOverClass) {
+					if (mouseOverClass.isSelected()){
+						mouseOverClass.setSelected(false);
 						selectedClass = null;
 					}
 					else{
-						selectedClass = c;
-						c.toggleSelection();
+						if (selectedClass != null && selectedClass != mouseOverClass){
+							selectedClass.setSelected(false);
+							selectedClass = null;
+						}
+						selectedClass = mouseOverClass;
+						mouseOverClass.setSelected(true);
 					}					
-					paint();
+					repaint();
 					return;
 				}
 			}
 			if (selectedClass != null) {
-				selectedClass.toggleSelection();
+				selectedClass.setSelected(false);
 				selectedClass = null;
-				paint();
+				repaint();
 			}
 		}
 	}

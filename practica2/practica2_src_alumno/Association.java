@@ -1,5 +1,7 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.*;
+import java.awt.Color;
 //otros imports …
 
 
@@ -29,11 +31,11 @@ public class Association {
 	}
 
 	public Class setOrigen(Class _origen) {
-		this.origen = _origen;
+		return this.origen = _origen;
 	}
 
 	public Class setDestino(Class _destino) {
-		this.destino = _destino;
+		return this.destino = _destino;
 	}
 
 	public Boolean perteneceAClase(Class _clase) {
@@ -57,13 +59,11 @@ public class Association {
 		int dWidth = destino.getWidth();
 		int dHeight = destino.getHeight();
 
-		boolean superpuestos = false
-
-		// FALTA DETALLAR COMO SE HARIA UNA ASOCIACION A UNA MISMA CLASE
+		boolean superpuestos = false;
 
 		if(oX < dX){
-			if (oX + oWidth < dX){
-				graphics2d.drawLine((oX+oWidth), (oY+(oHeight/2)), dX, (dY+(dHeight/2)))
+			if ((oX + oWidth) < dX){
+				graphics2d.drawLine((oX+oWidth), (oY+(oHeight/2)), dX, (dY+(dHeight/2)));
 			}
 			// Ahora comprobar cual esta arriba y cual abajo
 			else {
@@ -71,8 +71,8 @@ public class Association {
 			}
 		}
 		else{	// dX <= oX
-			if (dX + dWidth < oX){
-				graphics2d.drawLine((dX+dWidth), (dY+(dHeight/2)), oX, (oY+(oHeight/2)))
+			if ((dX + dWidth) < oX){
+				graphics2d.drawLine(dX+dWidth, dY+(dHeight/2), oX, (oY+(oHeight/2)));
 			}
 			else{
 				superpuestos = true;
@@ -81,10 +81,10 @@ public class Association {
 
 		if (superpuestos) {
 			if(oY > dY){
-				graphics2d.drawLine((oX+(oWidth/2)), (oY+oHeight), (dX+(dWidth/2), dY))
+				graphics2d.drawLine(oX+(oWidth/2), oY+oHeight, (dX+(dWidth/2)), dY);
 			}
 			else{
-				graphics2d.drawLine((dX+(dWidth/2)), (dY+dHeight), (oX+(oWidth/2), oY))
+				graphics2d.drawLine(dX+(dWidth/2), dY+dHeight, (oX+(oWidth/2)), oY);
 			}
 		}
 
@@ -98,7 +98,8 @@ public class Association {
 	}
 
 	public void delete() {
-		//...
+		// elimina la asociación
+		// no deberia ser necesario pero bueno
 	}
 	// Más métodos
 	// ...
