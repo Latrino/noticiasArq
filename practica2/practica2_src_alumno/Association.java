@@ -65,40 +65,40 @@ public class Association {
 
 		boolean superpuestos = false;
 
-		if(oX < dX){
-			if ((oX + oWidth) < dX){
-				graphics2d.drawLine((oX+oWidth), (oY+(oHeight/2)), dX, (dY+(dHeight/2)));
-			}
-			// Ahora comprobar cual esta arriba y cual abajo
-			else {
-				superpuestos = true;
-			}
-		}
-		else{	// dX <= oX
-			if ((dX + dWidth) < oX){
-				graphics2d.drawLine(dX+dWidth, dY+(dHeight/2), oX, (oY+(oHeight/2)));
-			}
-			else{
-				superpuestos = true;
-			}
-		}
-
-		if (superpuestos) {
-			if(oY > dY){
-				graphics2d.drawLine(dX+(dWidth/2), dY+dHeight, (oX+(oWidth/2)), oY);
-			}
-			else{
-				graphics2d.drawLine(oX+(oWidth/2), oY+oHeight, (dX+(dWidth/2)), dY);
-			}
-		}
-
 		if (origen == destino) {
             // Dibujar un bucle
             int loopX = oX + oWidth / 2;
             int loopY = oY - 20; // Ajustar la posición del bucle
             graphics2d.drawArc(loopX, loopY, 40, 40, 0, 360);
         }
+		else{
+			if(oX < dX){
+				if ((oX + oWidth) < dX){
+					graphics2d.drawLine((oX+oWidth), (oY+(oHeight/2)), dX, (dY+(dHeight/2)));
+				}
+				// Ahora comprobar cual esta arriba y cual abajo
+				else {
+					superpuestos = true;
+				}
+			}
+			else{	// dX <= oX
+				if ((dX + dWidth) < oX){
+					graphics2d.drawLine(dX+dWidth, dY+(dHeight/2), oX, (oY+(oHeight/2)));
+				}
+				else{
+					superpuestos = true;
+				}
+			}
 
+			if (superpuestos) {
+				if(oY > dY){
+					graphics2d.drawLine(dX+(dWidth/2), dY+dHeight, (oX+(oWidth/2)), oY);
+				}
+				else{
+					graphics2d.drawLine(oX+(oWidth/2), oY+oHeight, (dX+(dWidth/2)), dY);
+				}
+			}
+		}
 	}
 
 	public void delete() {

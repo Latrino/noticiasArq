@@ -140,6 +140,9 @@ public class Diagram
 		* si es asi, se añade la clase como destino de la asociacion
 		* si no, se cancela la creacion de la asociacion y se deselecciona la clase
 		*/
+		for (Class c : classes) {
+				c.setMoving(false);
+		}
 		if (eligiendoAsociacion) {
 			int mx = e.getX();
 			int my = e.getY();
@@ -158,14 +161,7 @@ public class Diagram
 				}
 			}
 			eligiendoAsociacion = false;
-			selectedClass.setSelected(false);
-			selectedClass = null;
 			repaint();
-		}
-		else {
-			for (Class c : classes) {
-				c.setMoving(false);
-			}
 		}
 		// revisar, lo que hace es que si se suelta el boton del raton, se deja de mover la clase
     }

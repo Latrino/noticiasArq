@@ -18,8 +18,8 @@ public class Class {
 		this.name = "Class " + (count++);
 		this.x = _x;
 		this.y = _y;
-		this.width = 120;
-		this.height = 80;
+		this.width = 100;
+		this.height = 120;
 		this.selected = false;
 		this.moving = false;
 	}
