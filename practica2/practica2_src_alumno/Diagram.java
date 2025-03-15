@@ -103,6 +103,7 @@ public class Diagram
 			}
 			classes.removeIf(z -> z.contains(mx, my));
 			window.updateNClasses(this);
+			window.updateNAssociations(this);
 			repaint();
 			return;
 		}
@@ -152,6 +153,7 @@ public class Diagram
 					*/
 					Association a = new Association(selectedClass, c);
 					associations.add(a);
+					window.updateNAssociations(this);
 					return;
 				}
 			}
