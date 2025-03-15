@@ -27,7 +27,9 @@ public class Association {
 	public Association(Class _origen, Class _destino) {
 		this.identifier = count++;
 		_origen.addAssociation(this);
-		_destino.addAssociation(this);
+		if (_origen != _destino){
+			_destino.addAssociation(this);
+		}
 		this.origen = _origen;
 		this.destino = _destino;
 	}
@@ -83,10 +85,10 @@ public class Association {
 
 		if (superpuestos) {
 			if(oY > dY){
-				graphics2d.drawLine(oX+(oWidth/2), oY+oHeight, (dX+(dWidth/2)), dY);
+				graphics2d.drawLine(dX+(dWidth/2), dY+dHeight, (oX+(oWidth/2)), oY);
 			}
 			else{
-				graphics2d.drawLine(dX+(dWidth/2), dY+dHeight, (oX+(oWidth/2)), oY);
+				graphics2d.drawLine(oX+(oWidth/2), oY+oHeight, (dX+(dWidth/2)), dY);
 			}
 		}
 

@@ -98,7 +98,6 @@ public class Diagram
 					// a.delete(); se puede poner para depurar pero como java quita la basura no deberia hacer falta
 					// solo con quitar la asociacion de la lista de asociaciones de la clase deberia bastar
 					associations.remove(a);
-					break;
 				}
 			}
 			classes.removeIf(z -> z.contains(mx, my));
