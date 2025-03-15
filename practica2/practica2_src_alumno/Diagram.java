@@ -101,6 +101,9 @@ public class Diagram
 				}
 			}
 			classes.removeIf(z -> z.contains(mx, my));
+			if (c == selectedClass) {
+				selectedClass = null;
+			}
 			window.updateNClasses(this);
 			window.updateNAssociations(this);
 			repaint();
@@ -156,6 +159,9 @@ public class Diagram
 					*/
 					Association a = new Association(selectedClass, c);
 					associations.add(a);
+					c.setPosibleSeleccion(false);
+					selectedClass.setSelected(false);
+					selectedClass = null;
 					window.updateNAssociations(this);
 					return;
 				}
@@ -223,52 +229,59 @@ public class Diagram
 	}
 
 	public void mouseDragged(MouseEvent e) {
-    int mx = e.getX();
-    int my = e.getY();
+		int mx = e.getX();
+		int my = e.getY();
 
-    // Mover la clase que está siendo arrastrada
-    for (Class c : classes) {
-        if (c.isMoving()) {
-            c.move(mx - c.getX(), my - c.getY());
-            repaint();
-        }
-    }
+		// Mover la clase que está siendo arrastrada
+		for (Class c : classes) {
+			if (c.isMoving()) {
+				c.move(mx - c.getX(), my - c.getY());
+				repaint();
+			}
+		}
 
-    // Lógica de selección de clases (similar a mouseMoved)
-    boolean found = false;
-    for (int i = classes.size() - 1; i >= 0; i--) {
-        Class c = classes.get(i);
-        if (c.contains(mx, my)) {
-            // Deseleccionar la clase anterior si es necesario
-            if (mouseOverClass != null && mouseOverClass != c && mouseOverClass != selectedClass) {
-                mouseOverClass.setSelected(false);
-            }
+		// Lógica de selección de clases (similar a mouseMoved)
+		boolean found = false;
+		for (int i = classes.size() - 1; i >= 0; i--) {
+			Class c = classes.get(i);
+			if (c.contains(mx, my)) {
+				// Deseleccionar la clase anterior si es necesario
+				if (mouseOverClass != null && mouseOverClass != c && mouseOverClass != selectedClass) {
+					mouseOverClass.setSelected(false);
+				}
 
-            // Seleccionar la clase bajo el cursor si se está eligiendo una asociación
-            mouseOverClass = c;
-            if (eligiendoAsociacion) {
-                mouseOverClass.setSelected(true);
-            }
+				// Seleccionar la clase bajo el cursor si se está eligiendo una asociación
+				mouseOverClass = c;
+				if (eligiendoAsociacion) {
+					//mouseOverClass.setSelected(true);
+					mouseOverClass.setPosibleSeleccion(true);
+				}
 
-            // Mover la clase al frente
-            classes.remove(i);
-            classes.add(c);
+				// Mover la clase al frente
+				classes.remove(i);
+				classes.add(c);
 
-            found = true;
-            repaint();
-            break;
-        }
-    }
+				found = true;
+				repaint();
+				break;
+			}
+			else {
+				if (mouseOverClass != null) {
+					mouseOverClass.setPosibleSeleccion(false);
+					repaint();
+				}
+			}
+		}
 
-    // Si el cursor no está sobre ninguna clase
-    if (!found) {
-        if (mouseOverClass != null && mouseOverClass != selectedClass) {
-            mouseOverClass.setSelected(false); // Deseleccionar la clase anterior
-        }
-        mouseOverClass = null;
-        repaint();
-    }
-}
+		// Si el cursor no está sobre ninguna clase
+		if (!found) {
+			if (mouseOverClass != null && mouseOverClass != selectedClass) {
+				mouseOverClass.setSelected(false); // Deseleccionar la clase anterior
+			}
+			mouseOverClass = null;
+			repaint();
+		}
+	}
     
 	/********************************************/
 	/** MÈtodos de KeyListener                 **/

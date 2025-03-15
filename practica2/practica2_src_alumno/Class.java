@@ -13,6 +13,8 @@ public class Class {
 	private boolean moving;
 	private static int count = 0; // count es de la clase en general, no de la clase especifica (static)
 	private Vector<Association> associations = new Vector<Association>(); // hay que guardar todas las asociaciones para borrarlas si se borra la clase
+
+	private boolean posibleSeleccion = false;
 	
 	public Class(int _x, int _y) {
 		this.name = "Class " + (count++);
@@ -51,12 +53,23 @@ public class Class {
 	public int getHeight() {
 		return this.height;
 	}
+
+	public void setPosibleSeleccion(boolean _posibleSeleccion) {
+		this.posibleSeleccion = _posibleSeleccion;
+	}
+
+	public boolean getPosibleSeleccion() {
+		return this.posibleSeleccion;
+	}
 	
 	public void draw(Graphics g){
 		//Dibuja la clase
 		Graphics2D g2 = (Graphics2D)g;
 		
-		if (selected) {
+		if (posibleSeleccion) {
+			g2.setPaint(Color.GREEN);
+		}
+		else if (selected) {
 			g2.setPaint(Color.CYAN);
 		}
 		else {
