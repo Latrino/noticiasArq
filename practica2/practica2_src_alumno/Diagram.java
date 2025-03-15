@@ -167,8 +167,8 @@ public class Diagram
 				}
 			}
 			eligiendoAsociacion = false;
-			repaint();
 		}
+		repaint();
 		// revisar, lo que hace es que si se suelta el boton del raton, se deja de mover la clase
     }
     
@@ -252,7 +252,7 @@ public class Diagram
 
 				// Seleccionar la clase bajo el cursor si se está eligiendo una asociación
 				mouseOverClass = c;
-				if (eligiendoAsociacion) {
+				if (eligiendoAsociacion && selectedClass != null) {
 					//mouseOverClass.setSelected(true);
 					mouseOverClass.setPosibleSeleccion(true);
 				}
