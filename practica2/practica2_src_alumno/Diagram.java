@@ -221,18 +221,54 @@ public class Diagram
 			repaint();
 		}
 	}
-    
+
 	public void mouseDragged(MouseEvent e) {
-		// funcion para mover la clase seleccionada
-		int mx = e.getX();
-		int my = e.getY();
-		for (Class c : classes) {
-			if (c.isMoving()) {
-				c.move(mx - c.getX(), my - c.getY());
-				repaint();
-			}
-		}
-	}
+    int mx = e.getX();
+    int my = e.getY();
+
+    // Mover la clase que está siendo arrastrada
+    for (Class c : classes) {
+        if (c.isMoving()) {
+            c.move(mx - c.getX(), my - c.getY());
+            repaint();
+        }
+    }
+
+    // Lógica de selección de clases (similar a mouseMoved)
+    boolean found = false;
+    for (int i = classes.size() - 1; i >= 0; i--) {
+        Class c = classes.get(i);
+        if (c.contains(mx, my)) {
+            // Deseleccionar la clase anterior si es necesario
+            if (mouseOverClass != null && mouseOverClass != c && mouseOverClass != selectedClass) {
+                mouseOverClass.setSelected(false);
+            }
+
+            // Seleccionar la clase bajo el cursor si se está eligiendo una asociación
+            mouseOverClass = c;
+            if (eligiendoAsociacion) {
+                mouseOverClass.setSelected(true);
+            }
+
+            // Mover la clase al frente
+            classes.remove(i);
+            classes.add(c);
+
+            found = true;
+            repaint();
+            break;
+        }
+    }
+
+    // Si el cursor no está sobre ninguna clase
+    if (!found) {
+        if (mouseOverClass != null && mouseOverClass != selectedClass) {
+            mouseOverClass.setSelected(false); // Deseleccionar la clase anterior
+        }
+        mouseOverClass = null;
+        repaint();
+    }
+}
     
 	/********************************************/
 	/** MÈtodos de KeyListener                 **/
