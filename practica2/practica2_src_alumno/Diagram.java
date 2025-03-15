@@ -115,6 +115,7 @@ public class Diagram
 					Class c = classes.get(i); 
 					if (c.contains(mx, my)) {
 						c.setMoving(true);
+						break;
 					}
 				}
 			}
@@ -212,6 +213,8 @@ public class Diagram
 			if (c.contains(mx, my)) {
 				mouseOverClass = c;
 				found = true;
+				classes.remove(i);
+				classes.add(c);
 				repaint();
 				break;
 			}
