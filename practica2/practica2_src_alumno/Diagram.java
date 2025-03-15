@@ -102,6 +102,7 @@ public class Diagram
 				}
 			}
 			classes.removeIf(z -> z.contains(mx, my));
+			window.updateNClasses(this);
 			repaint();
 			return;
 		}
@@ -121,8 +122,10 @@ public class Diagram
 				// esperamos y guardamos el origen 
 				if (selectedClass.contains(mx, my)) {
 					// creamos la asociacion solo con el origen
+					/*
 					Association a = new Association(selectedClass);
 					associations.add(a);
+					*/
 					eligiendoAsociacion = true;
 				}
 			}
@@ -143,16 +146,17 @@ public class Diagram
 				Class c = classes.get(i);
 				if (c.contains(mx, my)) {
 					// añadir el destino a la asociacion
+					/*
 					Association a = associations.get(associations.size() - 1);
 					a.setDestino(c);
-					eligiendoAsociacion = false;
-					repaint();
+					*/
+					Association a = new Association(selectedClass, c);
+					associations.add(a);
 					return;
 				}
 			}
 			eligiendoAsociacion = false;
-			Association a = associations.get(associations.size() - 1);
-			associations.remove(a);
+			selectedClass.setSelected(false);
 			selectedClass = null;
 			repaint();
 		}

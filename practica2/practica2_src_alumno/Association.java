@@ -26,6 +26,8 @@ public class Association {
 	// no se si llegaremos a necesitar este constructor
 	public Association(Class _origen, Class _destino) {
 		this.identifier = count++;
+		_origen.addAssociation(this);
+		_destino.addAssociation(this);
 		this.origen = _origen;
 		this.destino = _destino;
 	}
