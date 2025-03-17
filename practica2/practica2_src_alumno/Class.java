@@ -11,8 +11,8 @@ public class Class {
 	private int x, y, width, height;
 	private boolean selected;
 	private boolean moving;
-	private static int count = 0; // count es de la clase en general, no de la clase especifica (static)
-	private Vector<Association> associations = new Vector<Association>(); // hay que guardar todas las asociaciones para borrarlas si se borra la clase
+	private static int count = 0; 
+	private Vector<Association> associations = new Vector<Association>(); // se guardan todas las asociaciones para borrarlas si se borra la clase
 
 	private boolean posibleSeleccion = false;
 	
@@ -101,11 +101,6 @@ public class Class {
         x += dx;
         y += dy;
     }
-
-
-	/*public void toggleSelection() {
-        selected = !selected;
-    }*/
 
     public boolean isSelected() {
         return selected;

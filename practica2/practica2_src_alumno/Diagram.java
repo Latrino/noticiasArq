@@ -53,17 +53,6 @@ public class Diagram
 		return associations.size();
 	}
 
-	/*public void paint(Graphics g) {
-		//Dibuja el diagrama de clases
-		super.paint(g);
-		for (Class c : classes) {
-			c.draw(g);
-		}
-		for (Association a : associations) {
-			a.draw(g);
-		}
-	}*/
-
 	@Override
 	public void paintComponent(Graphics g) {
 		//Dibuja el diagrama de clases
@@ -85,7 +74,7 @@ public class Diagram
 			int my = e.getY();
 
 			// Si es clic derecho, eliminar la clase
-		if (SwingUtilities.isRightMouseButton(e)) { // ESTE ESTA BIEN
+		if (SwingUtilities.isRightMouseButton(e)) { 
 			Class c = null;
 			for (Class cl : classes) {
 				if (cl.contains(mx, my)) {
@@ -96,7 +85,6 @@ public class Diagram
 			for (Association a : c.getAssociations()) {
 				if (a.perteneceAClase(c)) { 
 					// a.delete(); se puede poner para depurar pero como java quita la basura no deberia hacer falta
-					// solo con quitar la asociacion de la lista de asociaciones de la clase deberia bastar
 					associations.remove(a);
 				}
 			}
@@ -110,7 +98,7 @@ public class Diagram
 			return;
 		}
 
-		// lo que de verdad tiene sentido:
+		// si es clic izquierdo se selecciona o se mueve la clase
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			// Verificar si el clic fue sobre una clase existente
 			if (selectedClass == null) {
@@ -123,13 +111,7 @@ public class Diagram
 				}
 			}
 			else {
-				// esperamos y guardamos el origen 
 				if (selectedClass.contains(mx, my)) {
-					// creamos la asociacion solo con el origen
-					/*
-					Association a = new Association(selectedClass);
-					associations.add(a);
-					*/
 					eligiendoAsociacion = true;
 				}
 			}
@@ -140,7 +122,7 @@ public class Diagram
     public void mouseReleased(MouseEvent e) {
 		/*
 		* si se estaba eligiendo una asociacion cuando se suelta el raton se mira a ver si se ha soltado sobre una clase
-		* si es asi, se añade la clase como destino de la asociacion
+		* si es asi, se crea la asociacion y se deselecciona la clase
 		* si no, se cancela la creacion de la asociacion y se deselecciona la clase
 		*/
 		for (Class c : classes) {
@@ -152,11 +134,6 @@ public class Diagram
 			for (int i = classes.size() - 1; i >= 0; i--) {
 				Class c = classes.get(i);
 				if (c.contains(mx, my)) {
-					// añadir el destino a la asociacion
-					/*
-					Association a = associations.get(associations.size() - 1);
-					a.setDestino(c);
-					*/
 					Association a = new Association(selectedClass, c);
 					associations.add(a);
 					c.setPosibleSeleccion(false);
@@ -169,28 +146,11 @@ public class Diagram
 			eligiendoAsociacion = false;
 		}
 		repaint();
-		// revisar, lo que hace es que si se suelta el boton del raton, se deja de mover la clase
     }
     
 	// revisar
 	public void mouseEntered(MouseEvent e) {
-		/*int mx = e.getX();
-		int my = e.getY(); 
 
-		for (int i = classes.size() - 1; i >= 0; i--) {  // Iterar en orden inverso (de arriba hacia abajo)
-			Class c = classes.get(i);
-			if (c.contains(mx, my)) {
-
-				// Traer la clase al frente
-				classes.remove(i);
-				classes.add(c);
-
-				mouseOverClass = c;
-				
-				repaint();
-				return;
-			}
-		}*/
     }
     
 	public void mouseExited(MouseEvent e) {
@@ -199,7 +159,7 @@ public class Diagram
     }
     
 	public void mouseClicked(MouseEvent e) {
-		// para que demonios sive esto?
+	
     }
 
 	/********************************************/
@@ -253,7 +213,6 @@ public class Diagram
 				// Seleccionar la clase bajo el cursor si se está eligiendo una asociación
 				mouseOverClass = c;
 				if (eligiendoAsociacion && selectedClass != null) {
-					//mouseOverClass.setSelected(true);
 					mouseOverClass.setPosibleSeleccion(true);
 				}
 
@@ -288,14 +247,12 @@ public class Diagram
 	/********************************************/
 
 	public void keyTyped(KeyEvent e) {
-		// idk para que se utiliza
+		
     }
     
 	public void keyPressed(KeyEvent e) {
 		// si se pulsa la tecla S se selecciona la clase sobre la que esta el cursor
 		// si se pulsa S cuando ya hay una clase seleccionada, se deselecciona
-		//int mx = e.getX();
-		//int my = e.getY();
 		if (e.getKeyCode() == KeyEvent.VK_S) {
 			for (Class c : classes) {
 				if (mouseOverClass != null && c == mouseOverClass) {
@@ -324,6 +281,6 @@ public class Diagram
 	}
     
     public void keyReleased(KeyEvent e) {
-		// idk para que se utiliza
+		
     }
 }

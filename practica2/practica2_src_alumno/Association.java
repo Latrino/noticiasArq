@@ -16,14 +16,14 @@ public class Association {
 	
 	// Constructores
 	// ...
-	// podemos añadir varios constructores, igual es buena idea
+	// constructor para asociaciones con una clase
 	public Association(Class _origen) {
 		this.origen = _origen;
 		this.destino = null;
 		this.identifier = count++;
 	}
 
-	// no se si llegaremos a necesitar este constructor
+	// constructor para asociaciones con dos clases
 	public Association(Class _origen, Class _destino) {
 		this.identifier = count++;
 		_origen.addAssociation(this);
@@ -101,9 +101,10 @@ public class Association {
 		}
 	}
 
+	// funcion para borrar la asociacion
+	// como Java se encarga de la memoria, no es necesario hacer nada
 	public void delete() {
-		// elimina la asociación
-		// no deberia ser necesario pero bueno
+		
 	}
 	// Más métodos
 	// ...
