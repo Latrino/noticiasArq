@@ -1,3 +1,11 @@
+/*
+ * Application.java
+ * Autores: Pablo Latre Villacampa y Alicia Lazaro Huerta
+ * Fecha: 17 de marzo de 2025
+ * Comentario: javac *.java para compilar
+ * 		  java Application para ejecutar
+ */
+
 import javax.swing.*;
 import java.awt.*;
 

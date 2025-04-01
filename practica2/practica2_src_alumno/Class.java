@@ -1,5 +1,7 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.*;
+import java.awt.Color;
 //otros import
 
 public class Class {
@@ -9,15 +11,17 @@ public class Class {
 	private int x, y, width, height;
 	private boolean selected;
 	private boolean moving;
-	private static int count = 0; // count es de la clase en general, no de la clase especifica (static)
-	private Vector<Association> associations = new Vector<Association>(); // hay que guardar todas las asociaciones para borrarlas si se borra la clase
+	private static int count = 0; 
+	private Vector<Association> associations = new Vector<Association>(); // se guardan todas las asociaciones para borrarlas si se borra la clase
+
+	private boolean posibleSeleccion = false;
 	
 	public Class(int _x, int _y) {
 		this.name = "Class " + (count++);
 		this.x = _x;
 		this.y = _y;
-		this.width = 120;
-		this.height = 80;
+		this.width = 100;
+		this.height = 120;
 		this.selected = false;
 		this.moving = false;
 	}
@@ -34,15 +38,38 @@ public class Class {
 		return this.width;
 	}
 
+	public void setMoving(boolean _moving) {
+		this.moving = _moving;
+	}
+
+	public boolean isMoving() {
+		return this.moving;
+	}
+
+	public Vector<Association> getAssociations() {
+		return this.associations;
+	}
+
 	public int getHeight() {
 		return this.height;
+	}
+
+	public void setPosibleSeleccion(boolean _posibleSeleccion) {
+		this.posibleSeleccion = _posibleSeleccion;
+	}
+
+	public boolean getPosibleSeleccion() {
+		return this.posibleSeleccion;
 	}
 	
 	public void draw(Graphics g){
 		//Dibuja la clase
 		Graphics2D g2 = (Graphics2D)g;
 		
-		if (selected) {
+		if (posibleSeleccion) {
+			g2.setPaint(Color.GREEN);
+		}
+		else if (selected) {
 			g2.setPaint(Color.CYAN);
 		}
 		else {
@@ -75,14 +102,13 @@ public class Class {
         y += dy;
     }
 
-
-	public void toggleSelection() {
-        selected = !selected;
-    }
-
     public boolean isSelected() {
         return selected;
     }
+
+	public void setSelected(boolean _selected) {
+		this.selected = _selected;
+	}
 
 	public void addAssociation(Association a) {
 		associations.add(a);

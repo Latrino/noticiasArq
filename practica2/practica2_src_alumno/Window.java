@@ -69,6 +69,6 @@ public class Window implements ActionListener {
 		labelNClasses.setText("Classes: " + d.getNClasses());
 	}
 	public void updateNAssociations(Diagram d){
-		labelNAssociations.setText("Associations: " + diagram.getNAssociations());
+		labelNAssociations.setText("Associations: " + d.getNAssociations());
 	}
 }
