@@ -40,13 +40,14 @@ implements Collection
         // Crear administrador de seguridad
         System.setSecurityManager(new SecurityManager ());
         // Nombre o IP del host donde reside el objeto servidor
-        String hostName = " IPhostremoto "; // se puede usar "IPhostremoto : puerto "
+        //String hostName = " IPhostremoto "; // se puede usar "IPhostremoto : puerto "
         // Por defecto , RMI usa el puerto 1099
         try {
             // Crear objeto remoto
             CollectionImpl obj = new CollectionImpl ();
             System.out.println(" Creado !") ;
             // Registrar el objeto remoto
+            String hostName = "localhost:32000";
             Naming.rebind ("//" + hostName + "/ MyCollection ", obj ) ;
             System.out.println(" Estoy registrado!");
         }

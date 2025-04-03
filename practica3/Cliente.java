@@ -15,8 +15,14 @@ public class Cliente
         try {
             // Paso 1 - Obtener una referencia al objeto servidor creado anteriormente
             // Nombre del host servidor o su IP. Es dó nde se buscar á al objeto remoto
-            String hostname = " IPremotehost "; // se puede usar "IP: puerto "
-            Collection server = ( Collection ) Naming . lookup ("//"+ hostname + "/ MyCollection ") ;
+            /*String hostname = " IPremotehost "; // se puede usar "IP: puerto "
+            Collection server = ( Collection ) Naming . lookup ("//"+ hostname + "/ MyCollection ") ;*/
+            String hostname = "localhost:32000";
+            Collection server = (Collection) Naming.lookup("//" + hostname + "/MyCollection");
+
+
+
+
             // Paso 2 - Invocar remotamente los metodos del objeto servidor :
             // TODO : obtener el nombre de la colecci ón y el nú mero de libros
             System.out.println(" Nombre de la coleccion : " + server.name_of_collection());
