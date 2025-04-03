@@ -1,10 +1,14 @@
 // TODO : imports necesarios
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
 public class CollectionImpl extends UnicastRemoteObject
 implements Collection
 {
     // Private member variables
-    private int m_number_of_books;
-    private String m_name_of_collection;
+    private int m_number_of_books = 10;
+    private String m_name_of_collection = "Coleccion 1";
     // Constructor
     public CollectionImpl () throws RemoteException
     {
@@ -17,6 +21,16 @@ implements Collection
     public int number_of_books () throws RemoteException
     {
         return this.m_number_of_books;
+    }
+
+    public String name_of_collection () throws RemoteException
+    {
+        return this.m_name_of_collection;
+    }
+
+    public void name_of_collection ( String _new_value ) throws RemoteException
+    {
+        this.m_name_of_collection = _new_value;
     }
 
     public static void main (String args []) {
