@@ -8,7 +8,7 @@ implements Collection
 {
     // Private member variables
     private int m_number_of_books = 10;
-    private String m_name_of_collection = "Coleccion 1";
+    private String m_name_of_collection = "MyCollection";
     // Constructor
     public CollectionImpl () throws RemoteException
     {
@@ -21,6 +21,11 @@ implements Collection
     public int number_of_books () throws RemoteException
     {
         return this.m_number_of_books;
+    }
+
+    public void add_books (int number) throws RemoteException
+    {
+        this.m_number_of_books = this.m_number_of_books + number;
     }
 
     public String name_of_collection () throws RemoteException
@@ -36,9 +41,9 @@ implements Collection
     public static void main (String args []) {
         // Fijar el directorio donde se encuentra el java . policy
         // El segundo argumento es la ruta al java . policy
-        System.setProperty(" java . security . policy ", "./ java . policy ");
+        //System.setProperty(" java . security . policy ", "./ java . policy ");
         // Crear administrador de seguridad
-        System.setSecurityManager(new SecurityManager ());
+        //System.setSecurityManager(new SecurityManager ());
         // Nombre o IP del host donde reside el objeto servidor
         //String hostName = " IPhostremoto "; // se puede usar "IPhostremoto : puerto "
         // Por defecto , RMI usa el puerto 1099
@@ -48,7 +53,7 @@ implements Collection
             System.out.println(" Creado !") ;
             // Registrar el objeto remoto
             String hostName = "localhost:32000";
-            Naming.rebind ("//" + hostName + "/ MyCollection ", obj ) ;
+            Naming.rebind ("//" + hostName + "/MyCollection", obj ) ;
             System.out.println(" Estoy registrado!");
         }
         catch ( Exception ex ) {

@@ -7,11 +7,11 @@ public class Cliente
 {
     public static void main ( String [] args ) {
     // TODO : Fijar el directorio donde se encuentra el java . policy
-        System.setProperty("java.security.policy", "./java.policy");
+        /*System.setProperty("java.security.policy", "./java.policy");
         if ( System.getSecurityManager() == null ) {
         // TODO : Crear administrador de seguridad
             System.setSecurityManager(new SecurityManager());
-        }
+        }*/
         try {
             // Paso 1 - Obtener una referencia al objeto servidor creado anteriormente
             // Nombre del host servidor o su IP. Es dó nde se buscar á al objeto remoto
@@ -30,6 +30,8 @@ public class Cliente
             // TODO : cambiar el nombre de la coleccion y ver que ha funcionado
             server.name_of_collection("Nueva coleccion") ;
             System.out.println(" Nombre de la coleccion : " + server.name_of_collection());
+            server.add_books(5);
+            System.out.println(" Numero de libros : " + server.number_of_books());
         }
         catch ( Exception ex ) {
             System.out.println(ex);
