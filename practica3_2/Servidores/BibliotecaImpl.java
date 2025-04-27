@@ -1,5 +1,6 @@
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.RemoteException;
+import java.rmi.Naming;
 import java.util.*;
 
 public class BibliotecaImpl extends UnicastRemoteObject implements Biblioteca, Recomendaciones {
@@ -50,6 +51,23 @@ public class BibliotecaImpl extends UnicastRemoteObject implements Biblioteca, R
     public List<String> recomendarPorAutor(String autor) throws RemoteException {
         // Implementación del método para recomendar libros por autor
         return List.of("Recomendación3", "Recomendación4");
+    }
+
+    public static void main(String[] args) {
+        try {
+           
+            // Crear instancia del Broker
+            BibliotecaImpl biblioteca = new BibliotecaImpl();
+            
+            // Registrar el broker en RMI
+            
+            Naming.rebind("rmi://155.210.154.194:1100/servidores_043", biblioteca); // Usa tu nombre único
+            System.out.println("Servidor Biblioteca listo y registrado");
+            
+        } catch (Exception e) {
+            System.err.println("Error en Biblioteca:");
+            e.printStackTrace();
+        }
     }
     
 }
