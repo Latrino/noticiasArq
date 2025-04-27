@@ -5,17 +5,17 @@ import java.util.List;
 public class Cliente {
     public static void main(String[] args) {
         try {
-            Broker broker = (Broker) Naming.lookup("rmi://155.210.154.191/Broker_043");
+            Broker broker = (Broker) Naming.lookup("rmi://155.210.154.191:1099/Broker_043");
             
             // Prueba servicios de Biblioteca
             System.out.println("\n=== Pruebas Biblioteca ===");
             pruebaServicio(broker, "buscarLibro", "1984");
+            pruebaServicio(broker, "listarLibrosPorAutor", "Gabriel García Márquez");
             pruebaServicio(broker, "listarLibros", null);
             
             // Prueba servicios de Recomendaciones
             System.out.println("\n=== Pruebas Recomendaciones ===");
             pruebaServicio(broker, "recomendarPorGenero", "Ciencia Ficción");
-            pruebaServicio(broker, "recomendarPorAutor", "Gabriel García Márquez");
             
         } catch (Exception e) {
             System.err.println("Error en el cliente: " + e.getMessage());

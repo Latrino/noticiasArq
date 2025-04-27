@@ -1,6 +1,7 @@
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.RemoteException;
 import java.rmi.Naming;
+import java.util.stream.Collectors;
 import java.util.*;
 
 public class BibliotecaImpl extends UnicastRemoteObject implements Biblioteca, Recomendaciones {
@@ -27,9 +28,12 @@ public class BibliotecaImpl extends UnicastRemoteObject implements Biblioteca, R
     }
 
     @Override
-    public String buscarLibroPorAutor(String autor) throws RemoteException {
+    public List<String> listarLibrosPorAutor(String autor) throws RemoteException {
         // Implementación del método para buscar un libro por su autor
-        return libros.getOrDefault(autor, "Autor no encontrado");
+        return libros.entrySet().stream()
+        .filter(entry -> entry.getValue().equalsIgnoreCase(autor))
+        .map(Map.Entry::getKey)
+        .collect(Collectors.toList());
     }
 
     @Override
@@ -47,23 +51,18 @@ public class BibliotecaImpl extends UnicastRemoteObject implements Biblioteca, R
         return List.of("Recomendación1", "Recomendación2");
     }
 
-    @Override
-    public List<String> recomendarPorAutor(String autor) throws RemoteException {
-        // Implementación del método para recomendar libros por autor
-        return List.of("Recomendación3", "Recomendación4");
-    }
 
     public static void main(String[] args) {
         try {
-           
-            // Crear instancia del Broker
             BibliotecaImpl biblioteca = new BibliotecaImpl();
+            String url = "rmi://155.210.154.194:1101/Biblioteca_043";
+            Naming.rebind(url, biblioteca);
             
-            // Registrar el broker en RMI
+            // Registrar en el Broker
+            Broker broker = (Broker) Naming.lookup("rmi://155.210.154.191:1099/Broker_043");
+            broker.registrar_servidor("Biblioteca", "155.210.154.194:1101/Biblioteca_043");
             
-            Naming.rebind("rmi://155.210.154.194:1100/servidores_043", biblioteca); // Usa tu nombre único
-            System.out.println("Servidor Biblioteca listo y registrado");
-            
+            System.out.println("Servidor Biblioteca listo");
         } catch (Exception e) {
             System.err.println("Error en Biblioteca:");
             e.printStackTrace();

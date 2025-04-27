@@ -13,23 +13,29 @@ public class BrokerImpl extends UnicastRemoteObject implements Broker{
 
     @Override
     public void registrar_servidor(String nombre, String hostIpPuerto) throws RemoteException {
-        servidores.put(nombre, hostIpPuerto);
-        System.out.println("Servidor registrado: " + nombre + " en " + hostIpPuerto);
+        // Asegúrate que la URL incluya rmi://
+        String urlCompleta = hostIpPuerto.startsWith("rmi://") ? hostIpPuerto : "rmi://" + hostIpPuerto;
+        servidores.put(nombre, urlCompleta);
+        System.out.println("Servidor registrado: " + nombre + " en " + urlCompleta);
     }
 
 
     @Override
     public Object ejecutar_servicio(String nombreServicio, Vector<Object> args) throws RemoteException {
         try {
+
+            String serverName = nombreServicio.startsWith("recomendar") ? "Recomendaciones" : "Biblioteca";
+            String fullUrl = servidores.get(serverName);
+
             switch(nombreServicio) {
                 // Servicios de Biblioteca
                 case "buscarLibro":
                     Biblioteca biblioteca = (Biblioteca) Naming.lookup(servidores.get("Biblioteca"));
                     return biblioteca.buscarLibroPorTitulo((String) args.get(0));
 
-                case "buscarLibroPorAutor":
+                case "listarLibrosPorAutor":
                     Biblioteca bibliotecaAutor = (Biblioteca) Naming.lookup(servidores.get("Biblioteca"));
-                    return bibliotecaAutor.buscarLibroPorAutor((String) args.get(0));
+                    return bibliotecaAutor.listarLibrosPorAutor((String) args.get(0));
 
                 case "listarLibros":
                     Biblioteca bibliotecaListar = (Biblioteca) Naming.lookup(servidores.get("Biblioteca"));
@@ -39,10 +45,6 @@ public class BrokerImpl extends UnicastRemoteObject implements Broker{
                 case "recomendarPorGenero":
                     Recomendaciones rec = (Recomendaciones) Naming.lookup(servidores.get("Recomendaciones"));
                     return rec.recomendarPorGenero((String) args.get(0));
-                    
-                case "recomendarPorAutor":
-                    Recomendaciones recAutor = (Recomendaciones) Naming.lookup(servidores.get("Recomendaciones"));
-                    return recAutor.recomendarPorAutor((String) args.get(0));
 
                 default:
                     return "Servicio no encontrado";

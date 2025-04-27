@@ -23,21 +23,16 @@ public class RecomendacionesImpl extends UnicastRemoteObject implements Recomend
         return recomendaciones.getOrDefault(genero, Collections.emptyList());
     }
 
-    @Override
-    public List<String> recomendarPorAutor(String autor) throws RemoteException {
-        return recomendaciones.getOrDefault(autor, Collections.emptyList());
-    }
-
     public static void main(String[] args) {
         try {
-           
-            // Crear instancia del Broker
-            RecomendacionesImpl recomendaciones = new RecomendacionesImpl();
+            RecomendacionesImpl rec = new RecomendacionesImpl();
+            String url = "rmi://155.210.154.194:1101/Recomendaciones_043";
+            Naming.rebind(url, rec);
             
-            // Registrar el broker en RMI
-            Naming.rebind("rmi://localhost/Servidor_043", recomendaciones); // Usa tu nombre único
-            System.out.println("Servidor Recomendaciones listo y registrado");
+            Broker broker = (Broker) Naming.lookup("rmi://155.210.154.191:1099/Broker_043");
+            broker.registrar_servidor("Recomendaciones", "rmi://155.210.154.194:1101/Recomendaciones_043");
             
+            System.out.println("Servidor Recomendaciones listo");
         } catch (Exception e) {
             System.err.println("Error en Recomendaciones:");
             e.printStackTrace();
