@@ -19,8 +19,8 @@ Para ejecutar el programa necesitaremos seguir los siguientes pasos (uso el nip 
 3. Hacer ssh a cada una de las máquinas, y situarse en el directorio correspondiente:
 
 - En la 191 se encuentra el broker, habrá que hacer: ~/cd broker_043
-- En la 193 se encuentran los servidores, habrá que hacer: ~/cd broker_043
-- En la 194 se encuentra el cliente, habrá que hacer: ~/cd broker_043
+- En la 194 se encuentran los servidores, habrá que hacer: ~/cd broker_043
+- En la 193 se encuentra el cliente, habrá que hacer: ~/cd broker_043
 
 4. En la máquina 191, ejecutaremos el rmiregistry en el puerto 1099, y tras ejecutarlo, pondremos en marcha el broker:
    ~/rmiregistry 1099 &
