@@ -9,8 +9,8 @@ Para ejecutar el programa necesitaremos seguir los siguientes pasos (uso el nip 
    ~/scp Servidores/Biblioteca.class Servidores/Recomendaciones.class a778043@155.210.154.191:~/broker_043/
 
    //Los servidores tambien necesitan el interfaz del broker Broker.class
-   ~/scp -r Servidores/\* a778043@155.210.154.194:~/servidores_043/
-   ~/scp Broker/Broker.class a778043@155.210.154.194:~/servidores_043/
+   ~/scp -r Servidores/\* a778043@155.210.154.192:~/servidores_043/
+   ~/scp Broker/Broker.class a778043@155.210.154.192:~/servidores_043/
 
    //El cliente tambien necesita el interfaz del broker Broker.class
    ~/scp -r Cliente/\* a778043@155.210.154.193:~/cliente_043/
@@ -19,15 +19,15 @@ Para ejecutar el programa necesitaremos seguir los siguientes pasos (uso el nip 
 3. Hacer ssh a cada una de las máquinas, y situarse en el directorio correspondiente:
 
 - En la 191 se encuentra el broker, habrá que hacer: ~/cd broker_043
-- En la 194 se encuentran los servidores, habrá que hacer: ~/cd broker_043
-- En la 193 se encuentra el cliente, habrá que hacer: ~/cd broker_043
+- En la 192 se encuentran los servidores, habrá que hacer: ~/cd servidores_043
+- En la 193 se encuentra el cliente, habrá que hacer: ~/cd cliente_043
 
 4. En la máquina 191, ejecutaremos el rmiregistry en el puerto 1099, y tras ejecutarlo, pondremos en marcha el broker:
    ~/rmiregistry 1099 &
    ~/java BrokerImpl
 
-5. En la máquina 194, ejecutaremos el rmiregistry en el puerto 1101 para los servidores, y tras ejecutarlo, pondremos en marcha los mismos:
-   ~/rmiregistry 1099 &
+5. En la máquina 192, ejecutaremos el rmiregistry en el puerto 1101 para los servidores, y tras ejecutarlo, pondremos en marcha los mismos:
+   ~/rmiregistry 1101 &
    ~/java RecomendacionesImpl &  
    ~/java BibliotecaImpl &
 

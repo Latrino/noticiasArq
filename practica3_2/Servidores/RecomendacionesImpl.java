@@ -26,11 +26,11 @@ public class RecomendacionesImpl extends UnicastRemoteObject implements Recomend
     public static void main(String[] args) {
         try {
             RecomendacionesImpl rec = new RecomendacionesImpl();
-            String url = "rmi://155.210.154.194:1101/Recomendaciones_043";
+            String url = "rmi://155.210.154.192:1101/Recomendaciones_043";
             Naming.rebind(url, rec);
             
             Broker broker = (Broker) Naming.lookup("rmi://155.210.154.191:1099/Broker_043");
-            broker.registrar_servidor("Recomendaciones", "rmi://155.210.154.194:1101/Recomendaciones_043");
+            broker.registrar_servidor("Recomendaciones", "rmi://155.210.154.192:1101/Recomendaciones_043");
             
             System.out.println("Servidor Recomendaciones listo");
         } catch (Exception e) {

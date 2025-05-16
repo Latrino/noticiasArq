@@ -55,12 +55,12 @@ public class BibliotecaImpl extends UnicastRemoteObject implements Biblioteca, R
     public static void main(String[] args) {
         try {
             BibliotecaImpl biblioteca = new BibliotecaImpl();
-            String url = "rmi://155.210.154.194:1101/Biblioteca_043";
+            String url = "rmi://155.210.154.192:1101/Biblioteca_043";
             Naming.rebind(url, biblioteca);
             
             // Registrar en el Broker
             Broker broker = (Broker) Naming.lookup("rmi://155.210.154.191:1099/Broker_043");
-            broker.registrar_servidor("Biblioteca", "155.210.154.194:1101/Biblioteca_043");
+            broker.registrar_servidor("Biblioteca", "155.210.154.192:1101/Biblioteca_043");
             
             System.out.println("Servidor Biblioteca listo");
         } catch (Exception e) {
