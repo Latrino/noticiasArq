@@ -1,4 +1,7 @@
-package broker;
+package cliente;
+
+import broker.Broker;
+import broker.ConsumerCallback;
 
 public class ClienteAutomatizado {
     public static void main(String[] args) throws InterruptedException {
